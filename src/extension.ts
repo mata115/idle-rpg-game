@@ -2,25 +2,25 @@ import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	const provider = new ColorsViewProvider(context.extensionUri);
+	const provider = new GameViewProvider(context.extensionUri);
 
 	context.subscriptions.push(
-		vscode.window.registerWebviewViewProvider(ColorsViewProvider.viewType, provider));
+		vscode.window.registerWebviewViewProvider(GameViewProvider.viewType, provider));
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('calicoColors.addColor', () => {
+		vscode.commands.registerCommand('idleGame.addColor', () => {
 			provider.addColor();
 		}));
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('calicoColors.clearColors', () => {
+		vscode.commands.registerCommand('idleGame.clearColors', () => {
 			provider.clearColors();
 		}));
 }
 
-class ColorsViewProvider implements vscode.WebviewViewProvider {
+class GameViewProvider implements vscode.WebviewViewProvider {
 
-	public static readonly viewType = 'calicoColors.colorsView';
+	public static readonly viewType = 'idleGame.gameView';
 
 	private _view?: vscode.WebviewView;
 

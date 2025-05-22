@@ -1,6 +1,6 @@
 {
 	"name": "idle-rpg-game",
-	"description": "A simple idle RPG game in the sidebar",
+	"description": "A simple idle RPG",
 	"version": "0.0.1",
 	"private": true,
 	"license": "MIT",
@@ -9,7 +9,7 @@
 		"url": "https://github.com/Microsoft/vscode-extension-samples"
 	},
 	"engines": {
-		"vscode": "^1.74.0"
+		"vscode": "^1.100.0"
 	},
 	"extensionKind": [
 		"ui",
@@ -25,20 +25,20 @@
 			"explorer": [
 				{
 					"type": "webview",
-					"id": "calicoColors.colorsView",
-					"name": "Calico Colors"
+					"id": "idleGame.gameView",
+					"name": "Idle Game"
 				}
 			]
 		},
 		"commands": [
 			{
-				"command": "calicoColors.addColor",
-				"category": "Calico Colors",
+				"command": "idleGame.addColor",
+				"category": "Idle Game",
 				"title": "Add Color"
 			},
 			{
-				"command": "calicoColors.clearColors",
-				"category": "Calico Colors",
+				"command": "idleGame.clearColors",
+				"category": "Idle Game",
 				"title": "Clear Colors",
 				"icon": "$(clear-all)"
 			}
@@ -46,9 +46,9 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "calicoColors.clearColors",
+					"command": "idleGame.clearColors",
 					"group": "navigation",
-					"when": "view == calicoColors.colorsView"
+					"when": "view == idleGame.gameView"
 				}
 			]
 		}
@@ -68,7 +68,6 @@
 		"typescript-eslint": "^8.26.0"
 	},
 	"dependencies": {
-		"calico-colors": "file:",
 		"idle-rpg-game": "file:"
 	}
 }
