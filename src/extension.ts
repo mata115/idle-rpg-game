@@ -93,6 +93,7 @@ class GameViewProvider implements vscode.WebviewViewProvider {
 					<div class="container">
 						<h1>🧍 プレイヤー</h1>
 						<ul>
+						<li>HP: <span id="player-hp">100 / 100</span></li>
 						<li>攻撃力: <span id="player-attack">-</span></li>
 						<li>防御力: <span id="player-defense">-</span></li>
 						<li>コイン: <span id="player-coins">-</span> g</li>

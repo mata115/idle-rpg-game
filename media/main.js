@@ -18,10 +18,12 @@ const state = {
     attack: 10,
     defense: 5,
     coins: 100,
+    hp: 100,
+    maxHp: 100,
     critRate: 0.2,
     weaponLevel: 0,
     armorLevel: 0,
-	costLevel: 0
+    costLevel: 0,
   },
   enemy: null,
   log: [],
@@ -90,6 +92,7 @@ function log(message) {
 }
 
 function updateUI() {
+  document.getElementById("player-hp").innerText = `${state.player.hp} / ${state.player.maxHp}`;
   document.getElementById("player-attack").innerText = state.player.attack;
   document.getElementById("player-defense").innerText = state.player.defense;
   document.getElementById("player-coins").innerText = state.player.coins;
@@ -143,11 +146,22 @@ function battleTick() {
   if (state.enemy.hp <= 0) {
 	state.player.coins += state.enemy.reward;
 	log(`✅ ${state.enemy.name}（Lv.${state.enemy.level}）を倒した！ ${state.enemy.reward}g 獲得！`);
+
+	// プレイヤーの体力を全回復
+	state.player.hp = state.player.maxHp;
+	
 	spawnEnemy();
   } else {
-    const damageToPlayer = calculateEnemyDamage();
-    // state.player.coins = Math.max(state.player.coins - damageToPlayer, 0);
+	const damageToPlayer = calculateEnemyDamage();
+    state.player.hp -= damageToPlayer;
     log(`❗ ${state.enemy.name} の攻撃で ${damageToPlayer} ダメージ`);
+
+    if (state.player.hp <= 0) {
+      log("💀 プレイヤーがやられた！敵に敗北しました。");
+      state.enemy.level = Math.max(1, state.enemy.level - 1);
+      state.player.hp = state.player.maxHp;
+      spawnEnemy();
+    }
   }
 
   updateUI();
