@@ -75,50 +75,50 @@ class GameViewProvider implements vscode.WebviewViewProvider {
 		const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'main.js'));
 
 		// Do the same for the stylesheet.
-		const styleResetUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'reset.css'));
-		const styleVSCodeUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'vscode.css'));
+		//const styleResetUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'reset.css'));
+		//const styleVSCodeUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'vscode.css'));
 		const styleMainUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'main.css'));
 
 		// Use a nonce to only allow a specific script to be run.
-		const nonce = getNonce();
+		//const nonce = getNonce();
 
 		return `<!DOCTYPE html>
-			<html lang="en">
-			<head>
-				<meta charset="UTF-8">
+					<html lang="ja">
+					<head>
+					<meta charset="UTF-8">
+					<title>Idle RPG</title>
+					<link href="${styleMainUri}" rel="stylesheet">
+					</head>
+					<body>
+					<div class="container">
+						<h1>🧍 プレイヤー</h1>
+						<ul>
+						<li>攻撃力: <span id="player-attack">-</span></li>
+						<li>防御力: <span id="player-defense">-</span></li>
+						<li>コイン: <span id="player-coins">-</span> g</li>
+						</ul>
 
-				<!--
-					Use a content security policy to only allow loading styles from our extension directory,
-					and only allow scripts that have a specific nonce.
-					(See the 'webview-sample' extension sample for img-src content security policy examples)
-				-->
-				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+						<h1>🧟 敵</h1>
+						<ul>
+						<li>名前: <span id="enemy-name">-</span></li>
+						<li>レベル: <span id="enemy-level">1</span></li>
+						<li>HP: <span id="enemy-hp">-</span></li>
+						<li>攻撃力: <span id="enemy-attack">-</span></li>
+						<li>防御力: <span id="enemy-defense">-</span></li>
+						<li>会心率: <span id="enemy-crit">-</span></li>
+						</ul>
 
-				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+						<h2>💥 バトルログ</h2>
+						<div id="battle-log">
+						<p>戦闘はまだ始まっていません。</p>
+						</div>
 
-				<link href="${styleResetUri}" rel="stylesheet">
-				<link href="${styleVSCodeUri}" rel="stylesheet">
-				<link href="${styleMainUri}" rel="stylesheet">
-
-				<title>Cat Colors</title>
-			</head>
-			<body>
-				<ul class="color-list">
-				</ul>
-
-				<button class="add-color-button">Add Color</button>
-
-				<script nonce="${nonce}" src="${scriptUri}"></script>
-			</body>
-			</html>`;
+						<h2>🛠 強化 <span id="upgrade-cost">(次の強化コスト: 50g)</span></h2>
+						<button id="upgrade-weapon">武器強化</button>
+						<button id="upgrade-armor">防具強化</button>
+					</div>
+					<script src="${scriptUri}"></script>
+					</body>
+					</html>`;
 	}
-}
-
-function getNonce() {
-	let text = '';
-	const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	for (let i = 0; i < 32; i++) {
-		text += possible.charAt(Math.floor(Math.random() * possible.length));
-	}
-	return text;
 }
